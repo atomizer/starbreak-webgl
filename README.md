@@ -6,3 +6,4 @@ Improves performance in [StarBreak](http://www.starbreak.com/) by replacing Canv
 
 - install [TamperMonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
 - navigate to https://raw.githubusercontent.com/atomizer/starbreak-webgl/master/starbreak_webgl.user.js
+- click "Install"
