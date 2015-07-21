@@ -83,7 +83,9 @@ function fakeDrawImage(i, sx, sy, sw, sh, dx, dy, dw, dh) {
 	}
 
 	var id = src + '-' + sx + '-' + sy
-	tex = tex || (caches[src] ? caches[src][id] : null)
+	if (!tex && caches[src]) {
+		tex = caches[src][id]
+	}
 
 	// populate cache
 	if (!tex) {
