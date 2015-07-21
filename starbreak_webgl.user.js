@@ -95,7 +95,9 @@ function fakeDrawImage(i, sx, sy, sw, sh, dx, dy, dw, dh) {
 	// populate cache
 	if (!tex) {
 		if (!PIXI.utils.TextureCache[src]) {
-			var t = PIXI.Texture.fromImage(src)
+			// we know that the image is loaded so we can do this directly
+			var bt = new PIXI.BaseTexture(i)
+			var t = new PIXI.Texture(bt)
 			PIXI.Texture.addTextureToCache(t, src)
 			console.log('~~~ caching sprite sheet', src)
 			stats.sheets++
