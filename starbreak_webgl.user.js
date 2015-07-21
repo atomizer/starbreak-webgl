@@ -19,6 +19,10 @@ var PIXI, stage, transform
 var sprites = []
 // storage for Texture clips, grouped by sprite sheets
 var caches = {}
+// temporary storage for text textures
+var textCache = {}
+// flags to flush textCache
+var usedText = {}
 
 var spritecount
 var prevTime
@@ -82,9 +86,13 @@ function fakeDrawImage(i, sx, sy, sw, sh, dx, dy, dw, dh) {
 		// return
 
 		// or draw as another sprite
-		tex = new PIXI.Texture(PIXI.Texture.fromCanvas(i))//, new PIXI.Rectangle(sx, sy, sw, sh))
-		// have to do this manually because we'll not see this canvas ever again
-		delete PIXI.utils.BaseTextureCache[i._pixiId]
+		if (!i._pixiId) {
+			tex = PIXI.Texture.fromCanvas(i)
+			textCache[i._pixiId] = tex
+		} else {
+			tex = textCache[i._pixiId]
+		}
+		usedText[i._pixiId] = true
 	}
 
 	var id = src + '-' + sx + '-' + sy
@@ -242,6 +250,15 @@ function patch() {
 			sprites[k].visible = false
 		}
 		spritecount = 0
+		if (stats.frames == 20) {
+			var ntc = {}
+			// keep text texture cache small
+			for (var t in usedText) {
+				ntc[t] = textCache[t]
+			}
+			usedText = {}
+			textCache = ntc
+		}
 	}
 
 	window.Module.postMainLoop = function myPost() {
