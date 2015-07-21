@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         starbreak webGL renderer
 // @namespace    https://github.com/atomizer/starbreak-webgl
-// @version      3.5.0
+// @version      3.5.1
 // @description  gotta go fast
 // @author       atomizer
 // @match        http://*.starbreak.com/
@@ -12,7 +12,7 @@
 
 'use strict'
 
-var NAME = 'SB-WebGL 3.5.0'
+var NAME = 'SB-WebGL 3.5.1'
 
 var PIXI, stage, transform
 // storage for persistent Sprite objects
@@ -123,7 +123,7 @@ function fakeDrawImage(i, sx, sy, sw, sh, dx, dy, dw, dh) {
 	var spr = sprites[spritecount]
 	if (!spr) return
 
-	spr.texture = tex
+	spr._texture = tex
 
 	// transform
 	var wt = spr.worldTransform
