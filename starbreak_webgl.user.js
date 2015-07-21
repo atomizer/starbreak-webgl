@@ -86,8 +86,9 @@ function fakeDrawImage(i, sx, sy, sw, sh, dx, dy, dw, dh) {
 		// return
 
 		// or draw as another sprite
-		if (!i._pixiId) {
+		if (!i._pixiId || !usedText[i._pixiId]) {
 			tex = PIXI.Texture.fromCanvas(i)
+			delete PIXI.utils.BaseTextureCache[i._pixiId]
 			textCache[i._pixiId] = tex
 		} else {
 			tex = textCache[i._pixiId]
