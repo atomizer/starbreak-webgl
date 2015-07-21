@@ -154,6 +154,10 @@ function getColoredTexture(color) {
 }
 
 function fakeFillRect(x, y, w, h) {
+	if (w == 1 && h == 1) { // dots
+		CanvasRenderingContext2D.prototype.fillRect.apply(this, arguments)
+		return
+	}
 	var spr = sprites[spritecount]
 	spr.texture = getColoredTexture(this.fillStyle)
 	spr.worldTransform.fromArray([w, 0, x, 0, h, y])
@@ -189,7 +193,6 @@ function patch() {
 
 	var originalcontext = window.XDL.ctx
 	var originalcanvas = window.Module.canvas
-	originalcontext.clearRect(0, 0, originalcanvas.width, originalcanvas.height)
 	// inject interceptors
 	originalcontext.drawImage = fakeDrawImage
 	originalcontext.setTransform = fakeSetTransform
@@ -225,6 +228,7 @@ function patch() {
 
 	// frame loop hooks
 	window.Module.preMainLoop = function myPre() {
+		originalcontext.clearRect(0, 0, originalcanvas.width, originalcanvas.height)
 		for (var k = 0; k < spritecount; k++) {
 			sprites[k].visible = false
 		}
