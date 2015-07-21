@@ -20,7 +20,8 @@ var sprites = []
 // storage for Texture clips, grouped by sprite sheets
 var caches = {}
 
-var spritecount, frames
+var spritecount
+var prevTime
 var noop = function() {}
 
 // maximum amount of sprites rendered per frame
@@ -29,7 +30,8 @@ var SPRITES = 5000
 var stats = {
 	sheets: 0,
 	cached: 0,
-	draws: 0
+	draws: 0,
+	frames: 0
 }
 
 // storage for single-pixel textures (for rectanlges)
@@ -45,7 +47,10 @@ document.body.appendChild(out)
 
 function printStats() {
 	clearTimeout(statsTimer)
-	stats.draws = stats.draws / frames
+	stats.draws = stats.draws / stats.frames
+	// correcting timer variance
+	stats.frames = stats.frames * 1000 / (Date.now() - prevTime)
+	prevTime = Date.now()
 
 	var o = NAME
 	if (showStats) {
@@ -55,7 +60,7 @@ function printStats() {
 	}
 	out.innerHTML = o
 
-	stats.draws = frames = 0
+	stats.draws = stats.frames = 0
 	if (showStats) {
 		statsTimer = setTimeout(printStats, 1000)
 	}
@@ -239,7 +244,7 @@ function patch() {
 
 	window.Module.postMainLoop = function myPost() {
 		renderer.render(stage)
-		frames++
+		stats.frames++
 	}
 
 	transform = new PIXI.Matrix()
