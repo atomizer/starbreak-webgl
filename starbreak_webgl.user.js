@@ -4,7 +4,7 @@
 // @version      3.5.2
 // @description  gotta go fast
 // @author       atomizer
-// @match        http://*.starbreak.com/
+// @match        http://*.starbreak.com/*
 // @grant        none
 // @updateURL https://raw.githubusercontent.com/atomizer/starbreak-webgl/master/starbreak_webgl.user.js
 // @downloadURL https://raw.githubusercontent.com/atomizer/starbreak-webgl/master/starbreak_webgl.user.js
@@ -195,11 +195,11 @@ function fakeStrokeRect(x, y, w, h) {
 
 
 function patch() {
-	if (typeof window.XDL == 'undefined' || !window.XDL.ctx || !window.PIXI) {
+	if (typeof window.Module == 'undefined' || !window.Module.ctx || !window.PIXI) {
 		return setTimeout(patch, 1000)
 	}
 
-	var originalcontext = window.XDL.ctx
+	var originalcontext = window.Module.ctx
 	var originalcanvas = window.Module.canvas
 	// inject interceptors
 	originalcontext.drawImage = fakeDrawImage
