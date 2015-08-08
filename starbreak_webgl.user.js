@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         starbreak webGL renderer
 // @namespace    https://github.com/atomizer/starbreak-webgl
-// @version      3.5.2
+// @version      3.5.3
 // @description  gotta go fast
 // @author       atomizer
 // @match        http://*.starbreak.com/*
@@ -12,7 +12,7 @@
 
 'use strict'
 
-var NAME = 'SB-WebGL 3.5.2'
+var NAME = 'SB-WebGL 3.5.3'
 
 var PIXI, stage, transform
 // storage for persistent Sprite objects
